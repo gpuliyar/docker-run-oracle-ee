@@ -101,9 +101,14 @@ cd $TNS_ADMIN
 ```
 
 ### Check if the file exits
+```
+[oracle@9be8ab4b0685 ORCLCDB]$ ls -lrt tnsnames.ora
+-rw-r--r-- 1 oracle oinstall 396 Jan 20 05:36 tnsnames.ora
+```
 
 > Note: Sample out of the default file will look like below
 ```
+[oracle@9be8ab4b0685 ORCLCDB]$ cat tnsnames.ora
 ORCLCDB =   (DESCRIPTION =     (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))     (CONNECT_DATA =       (SERVER = DEDICATED)       (SERVICE_NAME = ORCLCDB.localdomain)     )   )
 ORCLPDB1 =   (DESCRIPTION =     (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))     (CONNECT_DATA =       (SERVER = DEDICATED)       (SERVICE_NAME = ORCLPDB1.localdomain)     )   )
 ```
