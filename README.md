@@ -19,12 +19,12 @@ docker pull store/oracle/database-enterprise:12.2.0.1
 
 ### Second - create a docker volume to externalize the data
 ```bash
-docker volume create oracle-db
+docker volume create <oracle volume name>
 ```
 
 ### Third - run the Image as a Container
 ```bash
-docker run -d -it --name oracleDB -v oracle-db:/ORCL -P store/oracle/database-enterprise:12.2.0.1
+docker run -d -it --name <oracle container name> -v <oracle volume name>:/ORCL -P store/oracle/database-enterprise:12.2.0.1
 ```
 Let's try to understand what these input options mean:
 1. `-d ->` Allows you to run the container in the background and print the Container ID
@@ -38,7 +38,7 @@ Let's try to understand what these input options mean:
 
 ### First connect to the Oracle Container sqlplus
 ```bash
-docker exec -it oracleDB bash -c "source /home/oracle/.bashrc; sqlplus /nolog"
+docker exec -it <oracle container name> bash -c "source /home/oracle/.bashrc; sqlplus /nolog"
 ```
 
 ### Connect to the sys account as sysdba
@@ -62,7 +62,7 @@ exit
 ### Now check if the sys password change
 #### Login again
 ```bash
-docker exec -it oracleDB bash -c "source /home/oracle/.bashrc; sqlplus /nolog"
+docker exec -it <oracle container name> bash -c "source /home/oracle/.bashrc; sqlplus /nolog"
 ```
 
 #### Connect with the new password
@@ -75,14 +75,14 @@ The database server exposes port 1521 for Oracle client connections over SQLNet 
 
 ### First, find the mapped port and ip, by executing
 ```
-docker ps 
+docker port <oracle container name>
 ```
 
 > Sample result will look like:
 ```
-user1@user-machine:~$ sudo docker ps
-CONTAINER ID        IMAGE                                       COMMAND                  CREATED             STATUS                  PORTS                                              NAMES
-9be8ab4b0685        store/oracle/database-enterprise:12.2.0.1   "/bin/sh -c '/bin/ba…"   40 hours ago        Up 40 hours (healthy)   0.0.0.0:32769->1521/tcp, 0.0.0.0:32768->5500/tcp   oracleDB
+user@user-machine:~# docker port oracleDB
+1521/tcp -> 0.0.0.0:32769
+5500/tcp -> 0.0.0.0:32768
 ```
 
 As you can see from the sample output from the above, the mapped port of `1521` is `32769`
@@ -92,7 +92,7 @@ As you can see from the sample output from the above, the mapped port of `1521` 
 
 ### Connect to the Oracle Container bash
 ```bash
-docker exec -it oracleDB bash -c "source /home/oracle/.bashrc; bash"
+docker exec -it <oracle container name> bash -c "source /home/oracle/.bashrc; bash"
 ```
 
 ### Goto tnsnames.ora file location
